@@ -19,15 +19,12 @@ gamma_e = 0.577215664901532860606512090082402431042159335
 def Lambf(x):
     err = 1.0
     a = np.array(x<np.e,int)
-    #print(a)
     A = np.ones(np.shape(a),int)-a
-    #print(x*a + 5*A)
     y = a*x + (A)*(np.log(x*A + 5*a) - np.log(np.log(x*A +5*a)))
     its = 0
     while(err>1.0e-13):
         y = y - y*(np.log(y/x)+y)/(1.0+y)
         err = np.sqrt(np.max((+y + np.log(y/x))**2))
-        #print('err=', err)
         its = its +1
         if(its >=1000000):
             print('error Lambf not converging')
@@ -60,9 +57,7 @@ while(zeta<0.85):
     its = 0
     while (err>1.0e-13):
         M = np.add.outer(np.log(ep)/sigma0,v0*gp)
-        #print(tau0*np.exp(tau0 + phi0 + M))
         chi  = Lambf(tau0*np.exp(tau0 + phi0 + M))
-        #print(chi)
         phi1 = inv(zeta,M,tau0)
         v1 = np.sqrt((ew@((tau0-chi)**2)@gw)/zeta)
         tau1 = ew@(chi)@gw
@@ -77,11 +72,7 @@ while(zeta<0.85):
         phi0 = phi
         sigma0 = sigma
         its = its+1
-        #print(zeta,tau,v,phi,sigma,err)
     print(zeta,tau,v,phi,sigma,err,its)
-    #plt.figure()
-    #plt.imshow(tau0*np.exp(tau0 + phi0 + M))
-    #plt.show()
     zeta = zeta + 0.01
 
     
