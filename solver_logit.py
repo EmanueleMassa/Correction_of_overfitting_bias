@@ -7,7 +7,7 @@ gp =  np.sqrt(2)*GH[:,0]        #gaussian points
 gw = GH[:,1]/np.sqrt(np.pi)     #gaussian weights
     
 
-#compute the chi realted to the proximal operator of the logit likelihood#
+#compute the chi related to the proximal operator of the logit likelihood#
 def chi(x,y,mu):
     err = 1.0
     z0 = (x-mu*y)/(1.0+mu)
@@ -57,8 +57,6 @@ def RS_solver(zeta,beta,phi):
     while (err>1.0e-13):
         beta_true = np.sqrt((beta*beta - v0*v0*(1-zeta))/(k0*k0)) 
         lp_true = beta_true*gp+phi_true
-        #print(beta_true)
-        #print(lp_true)
         f1 = f(lp_true,1)
         f0 =  f(lp_true,-1)
         M = np.add.outer(v0*gp,k0*beta_true*gp) + phi
@@ -78,8 +76,6 @@ def RS_solver(zeta,beta,phi):
         tau0 = tau
         phi_1 = inv(beta_true,-((gw)@(np.tanh(chi1))@(gw*f1) + (gw)@(np.tanh(chi0))@(gw*f0)))
         phi_true = eta*phi_1 + (1-eta)*phi_true
-        #print(beta_true,phi_true)
-        #print(tau,v,k,beta_true,phi_true,err,its)
     return np.array([tau,v,k,beta_true,phi_true,err,its])
 	
 	
