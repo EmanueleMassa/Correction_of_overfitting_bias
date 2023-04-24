@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import numpy.random as rnd
 import scipy.optimize as opt 
-from solver_zeta import RS_solver
+from solver_log_log import RS_solver
 
 n = 200
 p = 20
