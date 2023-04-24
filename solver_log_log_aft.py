@@ -65,8 +65,6 @@ def RS_solver(zeta):
         its = its +1 
     
     return np.array([tau,v,sigma,err,int(its)])
-    #print(zeta,tau,v,sigma,err,its)
-#print(tau,zeta,v,sigma,err,its)
 
 
     
