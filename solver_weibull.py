@@ -21,13 +21,11 @@ def Lambf(x):
     a = np.array(x<np.e,int)
     #print(a)
     A = np.ones(np.shape(a),int)-a
-    #print(x*a + 5*A)
     y = a*x + (A)*(np.log(x*A + 5*a) - np.log(np.log(x*A +5*a)))
     its = 0
     while(err>1.0e-13):
         y = y - y*(np.log(y/x)+y)/(1.0+y)
         err = np.sqrt(np.max((+y + np.log(y/x))**2))
-        #print('err=', err)
         its = its +1
         if(its >=1000000):
             print('error Lambf not converging')
