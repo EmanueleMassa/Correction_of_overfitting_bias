@@ -5,10 +5,7 @@ import numpy.random as rnd
 GH = np.loadtxt('GH.txt')
 
 gp=  np.sqrt(2)*GH[:,0]     #gaussian points
-gw = GH[:,1]/np.sqrt(np.pi) #gaussian weights
-
-beta_true = 0.8          
-phi_true = 0.2              
+gw = GH[:,1]/np.sqrt(np.pi) #gaussian weights           
 
 def chi(x,y,mu):
     err = 1.0
