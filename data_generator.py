@@ -2,15 +2,16 @@ import numpy as np
 import matplotlib.pyplot as plt
 import numpy.random as rnd
 import scipy.optimize as opt 
-from solver_zeta_phi_beta import RS_solver
-from ideal_solver import RS_ideal_solver
+from solver_logit import RS_solver
+from ideal_solver_logit import RS_ideal_solver
+
 n = 400
 p = 100
 m = 200
 zeta = p/n
-phi0  = -0.6
-theta0 = 0.8
 #true parameters
+phi0  = -0.6 
+theta0 = 0.8 
 beta0 = np.zeros(p+1)
 beta0[0] = theta0
 beta0[-1] = phi0
@@ -46,14 +47,9 @@ for k in range(m):
     #store the resutl in the matrix D 
     D[k,:] = fit.x
     beta_ml = fit.x[:-1]
-    phi_ml = fit.x[-1]
+    phi_ml = fit.x[-1] #ML estimator intercept
     y_ml = np.tanh(X@fit.x)
-    #H = (X.transpose()@np.diag(1.0-y_ml**2)@X)/n 
-    #H_inv = np.linalg.inv(H[:-1,:-1])
-    #f = np.diag(X[:,:-1]@H_inv@X[:,:-1].transpose())*(T-y_ml)/n
-    #xi = X[:,:-1]@beta_ml - f/(1.0-f)
-    #theta = np.sqrt(sum(xi*xi)/n - (sum(xi)/n)**2)
-    #print(theta,np.sqrt((X[:,:-1]@beta_ml)@(X[:,:-1]@beta_ml)))
+    #compute ML estimator for signal strength
     theta = sum((X[:,:-1]@beta_ml)**2)/n 
     Theta[k] = theta
     R[k,:] = RS_solver(zeta,theta,phi_ml)
@@ -61,11 +57,13 @@ for k in range(m):
 Beta_ml = D[:,:-1]
 Phi_ml = D[:,-1]
 
+#the correction factors for the ML estimator, based on the estimate of signla strength and intercept
 kappa_rs = R[:,2]
 v_rs = R[:,1]
 Theta_rs = R[:,3]
 Phi_rs = R[:,4]
 
+#theoretical curves based on the knowledge of the data generating process
 RS = RS_ideal_solver(zeta,theta0,phi0)
 w = RS[3]
 v = RS[2]
@@ -73,23 +71,6 @@ v = RS[2]
 def normal(x,mu,sigma):
     w = (x-mu)
     return np.exp(-0.5*((w/sigma)**2+np.log(2*np.pi) +2.0*np.log(sigma) ))
-
-
-#plt.figure()
-#plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
-#plt.hist(Beta_ml[:,0],density=True,color='grey')
-#x = np.linspace(min(Beta_ml[:,0]),max(Beta_ml[:,0]),10000)
-#plt.plot(x,normal(x,w,v/np.sqrt(p)))
-#plt.xlabel(r"$\mathbf{e}_1'\hat{\mathbf{\beta}}_n$")
-#plt.savefig('beta1.zeta'+'{:.2f}'.format(p/n)+'.png')
-
-#plt.figure()
-#plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
-#plt.hist(Beta_ml[:,2],density=True, color='grey')
-#x = np.linspace(min(Beta_ml[:,2]),max(Beta_ml[:,2]),10000)
-#plt.plot(x,normal(x,0.0,v/np.sqrt(p)))
-#plt.xlabel(r"$\mathbf{e}_3'\hat{\mathbf{\beta}}_n$")
-#plt.savefig('beta3.zeta'+'{:.2f}'.format(p/n)+'.png')
 
 plt.figure()
 plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
@@ -108,13 +89,6 @@ plt.hist(Beta_ml[:,2],density=True,color='lightgrey',label = r"$\mathbf{e}_3'\ha
 plt.plot(x,normal(x,beta0[2],v*theta0/(w*np.sqrt(p))))
 plt.legend()
 plt.savefig('beta3_sim.zeta'+'{:.2f}'.format(p/n)+'.png')
-
-#plt.figure()
-#plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
-#plt.hist(Beta_ml[:,0]/v_rs,density=True,color='grey',label = r"$\mathbf{e}_1'\hat{\mathbf{\beta}}^{var}_n$")
-#plt.hist(Beta_ml[:,0],density=True,color='lightgrey',label = r"$\mathbf{e}_1'\hat{\mathbf{\beta}}_n$")
-#plt.legend()
-#plt.savefig('beta1_var.zeta'+'{:.2f}'.format(p/n)+'.png')
 
 plt.figure()
 plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
