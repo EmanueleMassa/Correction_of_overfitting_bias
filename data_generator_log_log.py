@@ -8,6 +8,7 @@ n = 200
 p = 20
 m = 500
 zeta = p/n
+
 #true parameters
 beta0 = np.zeros(p)
 beta0[0] = 2.0
@@ -48,28 +49,10 @@ Beta_ml = D[:,:-2]
 Phi_ml = D[:,-2]
 Sigma_ml = np.exp(D[:,-1])
 
-#K_ml = Beta_ml@beta0/(beta0@beta0)
-#V_ml = np.sqrt(np.sum(Beta_ml**2,axis =1) - K_ml**2)
-
 RS = RS_solver(zeta)
 
 v = RS[1]
 sigma=RS[2]
-print(RS)
-
-#plt.figure()
-#plt.plot(beta0,Beta_ml.transpose(), 'k.', alpha = 0.1)
-#plt.savefig('cloud.png')
-
-#plt.figure()
-#plt.hist(K_ml,color='grey')
-#plt.axvline(x= rho)
-#plt.savefig('K.png')
-
-#plt.figure()
-#plt.hist(V_ml,color='grey')
-#plt.axvline(x= v)
-#plt.savefig('V.png')
 
 def normal(x,mu,sigma):
     w = (x-mu)
