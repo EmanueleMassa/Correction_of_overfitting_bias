@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy.random as rnd
 
 
-GH = np.loadtxt('GH.txt')
-GL = np.loadtxt('GL.txt')
+GH = np.loadtxt('GH.txt')  #load the list of point and weights for Hermite Gauss quadrature
+GL = np.loadtxt('GL.txt')   #load the list of point and weights for Laguerre Gauss quadrature
 
 ep=  GL[:,0]#exponential points
 gp=  np.sqrt(2)*GH[:,0]#gaussian points
@@ -13,7 +13,7 @@ ew = GL[:,1]/((1.0+np.exp(-ep))**2)#exponential weights
 gw = GH[:,1]/np.sqrt(np.pi)#gaussian weights
 
 
-
+#define the implicit function $\chi$ as in the main text of the article
 
 def chi(x,mu):
     err = 1.0
@@ -31,10 +31,11 @@ def chi(x,mu):
             return np.inf
     return y
 
+#define the proximal explicitluy in terms of the $\chi$
 def prox(x,mu):
     return x - mu*np.tanh(chi(x,mu))
 
-
+#solve the Rs euations
 def RS_solver(zeta):
     #variables initialization
     v0 = zeta
@@ -44,7 +45,7 @@ def RS_solver(zeta):
 
     err = 1.0
     its = 0
-
+    #start of self consistent loop 
     while(err>1.0e-13):
         M1 = chi(0.5*np.add.outer(v0*gp,-ep/sigma0),0.5*tau0)
         M0 = chi(0.5*np.add.outer(v0*gp,ep/sigma0),0.5*tau0)
