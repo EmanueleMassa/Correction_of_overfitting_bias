@@ -2,13 +2,13 @@
 
 In this repository you can find the numerical routines implemented by Emanuele Massa to solve the RS equations for the following models:
 
-1) Log-Logistic AFT model without censoring
-2) Weibull model without censoring
+1) Log-Logistic AFT model  $T|\mathbf{X} \sim  T|\mathbf{X} \sim  \frac{\rho\big(T \rme^{\mathbf{X}'\bm{\beta}+\phi}\big)^{\rho-1}}{\lambda\big(1+(T \rme^{\mathbf{X}'\bm{\beta}+\phi })^{\rho}\big)^2}$
+2) Weibull model 
 3) Logit regression model for binary data
 
 For further reference to the theory we refer to [https://arxiv.org/abs/2204.05827].
 
-For models 1 and 2 you can find a routine that computes the order parameters of the theory from the RS equations, the user need only to specify zeta = p/n. In particular the program in the file "solver_log_log.py" and "solver_weibull.py" compute the order parameters for several values of zeta (see the code).
+For models 1 and 2 you can find a routine that computes the order parameters of the theory from the RS equations, the user need only to specify zeta = p/n, where $$. In particular the program in the file "solver_log_log.py" and "solver_weibull.py" compute the order parameters for several values of zeta (see the code).
 
 For model 3 you can find two routines, the routine "ideal_solver_logit.py" computes the solution of the RS equations by taking as input zeta, the true signal strength and the true intercept of the model. These are generally unknown, or must be estimated. For this reason we also provide a different implementation "solver_logit.py" (again see () for further details) that takes as input only measurable quantities: zeta, the Maximum Likelihood (ML) estimate of the signal strength and the ML estimate of the intercept.
 
