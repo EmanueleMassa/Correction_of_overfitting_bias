@@ -45,6 +45,8 @@ for k in range(m):
     T = 2*T.astype(int)-np.ones(n)
     #fit the model
     x0 = np.zeros(p+1)
+    #the minimization routine is called three times, so that at each step 
+    #we obtain a better approximation of the minimum
     fit = opt.minimize(l,x0,method = 'BFGS',tol = 1.0e-13)
     fit = opt.minimize(l,fit.x,method = 'BFGS',tol = 1.0e-13)
     fit = opt.minimize(l,fit.x,method = 'BFGS',tol = 1.0e-13)
@@ -56,12 +58,15 @@ for k in range(m):
     #compute ML estimator for signal strength
     theta = sum((X[:,:-1]@beta_ml)**2)/n 
     Theta[k] = theta
+    #solve the RS equations that depend on $\hat{\theta}_n$ (signal strength) and $\hat{\phi}_n$ O(intercept)
     R[k,:] = RS_solver(zeta,theta,phi_ml)
     print(theta0,R[k,3],phi0,R[k,4])
+    
+#store the results
 Beta_ml = D[:,:-1]
 Phi_ml = D[:,-1]
 
-#the correction factors for the ML estimator, based on the estimate of signla strength and intercept
+#the correction factors for the ML estimator, based on the estimate of signal strength and intercept
 kappa_rs = R[:,2]
 v_rs = R[:,1]
 Theta_rs = R[:,3]
@@ -72,10 +77,14 @@ RS = RS_ideal_solver(zeta,theta0,phi0)
 w = RS[3]
 v = RS[2]
 
+#define the standard normal density 
 def normal(x,mu,sigma):
     w = (x-mu)
     return np.exp(-0.5*((w/sigma)**2+np.log(2*np.pi) +2.0*np.log(sigma) ))
 
+#plot the figures 
+
+#beta1
 plt.figure()
 plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
 x = np.linspace(min(Beta_ml[:,0]),max(Beta_ml[:,0]),10000)
@@ -85,6 +94,7 @@ plt.plot(x,normal(x,beta0[0],v*theta0/(w*np.sqrt(p))))
 plt.legend()
 plt.savefig('beta1_sim.zeta'+'{:.2f}'.format(p/n)+'.png')
 
+#beta3
 plt.figure()
 plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
 x = np.linspace(min(Beta_ml[:,2]),max(Beta_ml[:,2]),10000)
@@ -94,6 +104,7 @@ plt.plot(x,normal(x,beta0[2],v*theta0/(w*np.sqrt(p))))
 plt.legend()
 plt.savefig('beta3_sim.zeta'+'{:.2f}'.format(p/n)+'.png')
 
+#phi
 plt.figure()
 plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
 plt.hist(Phi_rs,density=True,color = 'grey',label = r"$\hat{\phi}^{\sim}_n$")
@@ -102,6 +113,7 @@ plt.axvline(x= phi0,color = 'black', linestyle = '-.')
 plt.legend()
 plt.savefig('phi.zeta'+'{:.2f}'.format(p/n)+'.png')
 
+#theta
 plt.figure()
 plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
 plt.hist(Theta,density=True,color = 'lightgrey',label = r"$\hat{\theta}_n$")
