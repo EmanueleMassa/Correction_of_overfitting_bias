@@ -6,7 +6,7 @@ In this repository you can find the numerical routines implemented by Emanuele M
 2) Weibull model $T|\mathbf{X} \sim \rho_0 T^{\rho_0-1} {\rm e}^{\mathbf{X}'\beta_0+\phi_0 + T^{\rho_0} \exp(\mathbf{X}'\beta_0+\phi_0)} \$
 4) Logit regression model for binary data $T = {\rm sign}\Big(\mathbf{X}'\mathbf{\beta}_0+ \phi_0 + \frac{1}{2} Z\Big), \quad Z \sim \frac{{\rm e}^{-z}}{\big(1+{\rm e}^{-z}\big)^2} $
 
-Here $T$ is the response and $\mathbf{X}$ are the covariates or predictors.
+Here $T$ is the response and $\mathbf{X}\in\mathbb{R}^p$ are the covariates or predictors.
 The sample size is indicated with $n$.
 For further reference to the theory we refer to [https://arxiv.org/abs/2204.05827].
 
