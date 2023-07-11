@@ -6,7 +6,7 @@ In this repository you can find the numerical routines implemented by Emanuele M
 2) Weibull model without censoring
 3) Logit regression model for binary data
 
-For further reference to the theory we refer to [@massa2023correction].
+For further reference to the theory we refer to [https://arxiv.org/abs/2204.05827].
 
 For models 1 and 2 you can find a routine that computes the order parameters of the theory from the RS equations, the user need only to specify zeta = p/n. In particular the program in the file "solver_log_log.py" and "solver_weibull.py" compute the order parameters for several values of zeta (see the code).
 
