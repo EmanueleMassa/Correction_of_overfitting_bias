@@ -4,10 +4,11 @@ import numpy.random as rnd
 import scipy.optimize as opt 
 from solver_log_log import RS_solver
 
-n = 200
-p = 20
-m = 500
-zeta = p/n
+#parameters of the simulations
+n = 200 #sample size 
+p = 20  #number of covariates
+m = 500 #number of experiments
+zeta = p/n #dimensionality ratio
 
 #true parameters
 beta0 = np.zeros(p)
