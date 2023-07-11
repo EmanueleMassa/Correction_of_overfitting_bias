@@ -2,12 +2,12 @@ import numpy as np
 import matplotlib.pyplot as plt 
 import numpy.random as rnd 
 
-GH = np.loadtxt('GH.txt')
+GH = np.loadtxt('GH.txt')       #load the list of point and weights for Hermite Gauss quadrature
 gp =  np.sqrt(2)*GH[:,0]        #gaussian points
 gw = GH[:,1]/np.sqrt(np.pi)     #gaussian weights
     
 
-#compute the chi related to the proximal operator of the logit likelihood#
+#define the implicit function $\chi$ as in the main text of the article
 def chi(x,y,mu):
     err = 1.0
     z0 = (x-mu*y)/(1.0+mu)
@@ -24,12 +24,14 @@ def chi(x,y,mu):
             return np.inf
     return z
 
+#define the likelihood of a bernoulli model, with exponential parametrization
 def f(x,y):
     return np.exp(-y*x)/(2*np.cosh(x))
 
 def a(x):
     return (np.log(x) - np.log(1-x))
 
+#inversion of the equation for the intercept 
 def inv(s,x):
     z = 0 
     err = 1.0
@@ -43,7 +45,7 @@ def g(t,y):
 
 def dg(t,y):
     return gw@(np.tanh(y+t*gp)*gp)/t
-    
+
 def RS_solver(zeta,beta,phi):
     #initialization 
     tau0 = zeta
@@ -54,6 +56,7 @@ def RS_solver(zeta,beta,phi):
 
     err = 1.0
     its = 0
+#self consistent loop 
     while (err>1.0e-13):
         beta_true = np.sqrt((beta*beta - v0*v0*(1-zeta))/(k0*k0)) 
         lp_true = beta_true*gp+phi_true
