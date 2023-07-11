@@ -33,7 +33,7 @@ def Lambf(x):
             return 0
     return y
 
-#inversion of the equation for zeta, gives tau as a function of zeta
+#inversion of the equation for zeta, gives phi as a function of zeta
 def inv(z,x,mu):
     err = 1.0
     y0 = 0.0
