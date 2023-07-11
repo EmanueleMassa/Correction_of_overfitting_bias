@@ -5,10 +5,12 @@ import scipy.optimize as opt
 from solver_logit import RS_solver
 from ideal_solver_logit import RS_ideal_solver
 
-n = 400
-p = 100
-m = 200
-zeta = p/n
+#parameters of the simulation
+n = 400     #sample size
+p = 100     #number of covariates
+m = 500     #number of experiments
+zeta = p/n  #dimensionality ratio
+
 #true parameters
 phi0  = -0.6 
 theta0 = 0.8 
@@ -24,14 +26,16 @@ T = np.array(rnd.random(n)<0.5*(1.0-np.tanh(X@beta0)))
 T = 2*T.astype(int)-np.ones(n)
 
 
-#def the loss function, or minus the utility
+#define minus the log-likelihood of the logit model 
 def l(theta):
     lp = X@theta
     return (-sum(np.log(1.0-T*np.tanh(lp)))/n)
+    
 #define the matrix that contains the ML estimators 
 D = np.empty((m,p+1))
 R = np.empty((m,7))
 Theta = np.empty(m)
+#repeat the experiment m times
 for k in range(m):
     #generate the data
     X = rnd.normal(size = (n,p+1))
