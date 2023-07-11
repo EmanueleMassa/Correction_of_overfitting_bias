@@ -3,8 +3,8 @@ import matplotlib.pyplot as plt
 import numpy.random as rnd
 import math 
 
-GH = np.loadtxt('GH.txt')
-GL = np.loadtxt('GL.txt')
+GH = np.loadtxt('GH.txt')  #load the list of point and weights for Hermite Gauss quadrature
+GL = np.loadtxt('GL.txt')  #load the list of point and weights for Laguerre Gauss quadrature
 
 ep=  GL[:,0]#exponential points
 gp=  np.sqrt(2)*GH[:,0]#gaussian points
@@ -14,8 +14,9 @@ gw = GH[:,1]/np.sqrt(np.pi)#gaussian weights
 
 gpw = gw*gp
 
-gamma_e = 0.577215664901532860606512090082402431042159335
+gamma_e = 0.577215664901532860606512090082402431042159335 #Euler-Mascheroni constant
 
+#function that computes the Lambert function for a matrix argument via newton method
 def Lambf(x):
     err = 1.0
     a = np.array(x<np.e,int)
@@ -32,6 +33,7 @@ def Lambf(x):
             return 0
     return y
 
+#inversion of the equation for zeta, gives tau as a function of zeta
 def inv(z,x,mu):
     err = 1.0
     y0 = 0.0
@@ -52,6 +54,7 @@ def RS_solver(zeta):
     phi0 = 0.0
     err = 1.0
     its = 0
+    #self consistent loop 
     while (err>1.0e-13):
         M = np.add.outer(np.log(ep)/sigma0,v0*gp)
         chi  = Lambf(tau0*np.exp(tau0 + phi0 + M))
