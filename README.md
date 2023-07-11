@@ -6,7 +6,7 @@ In this repository you can find the numerical routines implemented by Emanuele M
 2) Weibull model without censoring
 3) Logit regression model for binary data
 
-For further reference to the theory we refer to ().
+For further reference to the theory we refer to [@massa].
 
 For models 1 and 2 you can find a routine that computes the order parameters of the theory from the RS equations, the user need only to specify zeta = p/n. In particular the program in the file "solver_log_log.py" and "solver_weibull.py" compute the order parameters for several values of zeta (see the code).
 
@@ -18,3 +18,13 @@ We also share the python routines used to simulate the data and produce the figu
 3) "data_generator_logit.py"
 for the three models respectively.
 
+references:
+  - id: massa_overfitting
+    title: Correction of overfitting bias in regression models
+    author:
+      - family: Massa
+        given: Emanuele 
+    container-title: Arxiv
+    type: article-journal
+    issued:
+      year: 2023
