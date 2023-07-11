@@ -12,7 +12,7 @@ For further reference to the theory we refer to [https://arxiv.org/abs/2204.0582
 
 For models 1 and 2 you can find a routine that computes the order parameters of the theory from the RS equations, the user need only to specify $\zeta = p/n$. In particular the program in the file "solver_log_log.py" and "solver_weibull.py" compute the order parameters for several values of zeta (see the code).
 
-For model 3 you can find two routines, the routine "ideal_solver_logit.py" computes the solution of the RS equations by taking as input $\zeta$, the true signal strength and the true intercept of the model. These are generally unknown, or must be estimated. For this reason we also provide a different implementation "solver_logit.py" (again see () for further details) that takes as input only measurable quantities: zeta, the Maximum Likelihood (ML) estimate of the signal strength and the ML estimate of the intercept.
+For model 3 you can find two routines, the routine "ideal_solver_logit.py" computes the solution of the RS equations by taking as input $\zeta$, the true signal strength and the true intercept of the model. These are generally unknown, or must be estimated. For this reason we also provide a different implementation "solver_logit.py" (again see [https://arxiv.org/abs/2204.05827] for further details) that takes as input only measurable quantities: $\zeta$ and the Maximum Likelihood (ML) estimate of the signal strength $\hat{\theta}_n := \sum_{i=1}^n\|\mathbf{X}_i'\hat{\beta}_n\|^2/n$ and of the intercept $\hat{\phi}_n$.
 
 We also share the python routines used to simulate the data and produce the figures of the manuscript [https://arxiv.org/abs/2204.05827]. These are named 
 1) "data_generator_log_log.py"
