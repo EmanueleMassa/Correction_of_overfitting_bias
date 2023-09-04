@@ -1,4 +1,4 @@
-import numpy as np
+1import numpy as np
 import matplotlib.pyplot as plt
 import numpy.random as rnd
 import scipy.optimize as opt 
@@ -64,7 +64,7 @@ def normal(x,mu,sigma):
 
 #plot the results
 
-#first component of $\hat{\bbeta}_n$
+#beta1
 plt.figure()
 plt.title(r"$n=$"+str(n)+r" $\zeta=$"+'{:.2f}'.format(p/n)+r" $\theta_0=$"+str(beta0[0]))
 beta =Beta_ml[:,0]
@@ -72,37 +72,35 @@ plt.hist(beta,density=True,color='grey',label = r"$\mathbf{e}_1'\hat{\mathbf{\be
 x = np.linspace(min(beta),max(beta),10000)
 plt.plot(x,normal(x,beta0[0],v*sigma*sigma0/np.sqrt(p)),'k-',label = r"$\mathcal{N}(\mathbf{e}_1'\mathbf{\beta}_0,v^2/p^2)$")
 plt.axvline(x= beta0[0],color = 'black', linestyle = '-.',label = r"$\mathbf{e}_1'\mathbf{\beta}_0$")
-plt.legend()
+plt.xlabel(r"$\beta_1$")
 plt.savefig('beta1.zeta'+'{:.2f}'.format(p/n)+'.png')
 
-#third component of $\hat{\bbeta}_n$
+#beta2
 plt.figure()
 plt.title(r"$n=$"+str(n)+r" $\zeta=$"+'{:.2f}'.format(p/n)+r" $\theta_0=$"+str(beta0[0]))
-beta =Beta_ml[:,3]
-plt.hist(beta,density=True,color='grey',label = r"$\mathbf{e}_3'\hat{\mathbf{\beta}}^{\sim}_n$")
+beta =Beta_ml[:,1]
+plt.hist(beta,density=True,color='grey',label = r"$\mathbf{e}_2'\hat{\mathbf{\beta}}^{\sim}_n$")
 x = np.linspace(min(beta),max(beta),10000)
-plt.plot(x,normal(x,beta0[3],v*sigma*sigma0/np.sqrt(p)),'k-',label =  r"$\mathcal{N}(\mathbf{e}_3'\mathbf{\beta}_0,v^2/p^2)$")
-plt.axvline(x= beta0[3],color = 'black', linestyle = '-.',label = r"$\mathbf{e}_3'\mathbf{\beta}_0$")
-plt.legend()
-plt.savefig('beta3.zeta'+'{:.2f}'.format(p/n)+'.png')
+plt.plot(x,normal(x,beta0[1],v*sigma*sigma0/np.sqrt(p)),'k-',label =  r"$\mathcal{N}(\mathbf{e}_2'\mathbf{\beta}_0,v^2/p^2)$")
+plt.axvline(x= beta0[1],color = 'black', linestyle = '-.',label = r"$\mathbf{e}_2'\mathbf{\beta}_0$")
+plt.xlabel(r"$\beta_2$")
+plt.savefig('beta2.zeta'+'{:.2f}'.format(p/n)+'.png')
 
-#location parameter
+#phi
 plt.figure()
 plt.title(r"$n=$"+str(n)+r" $\zeta=$"+'{:.2f}'.format(p/n)+r" $\theta_0=$"+str(beta0[0]))
 plt.hist(Phi_ml,density=True,color = 'grey',label =r'$\hat{\phi}_n$')
 plt.axvline(x= phi0,color = 'black', linestyle = '-.')
-plt.xlabel(r'$\hat{\phi}_n$')
-plt.legend()
+plt.xlabel(r'$\phi$')
 plt.savefig('phi.zeta'+'{:.2f}'.format(p/n)+'.png')
 
-
-#scale parameter
+#sigma
 plt.figure()
 plt.title(r"$n=$"+str(n)+r" $\zeta=$"+'{:.2f}'.format(p/n)+r" $\theta_0=$"+str(beta0[0]))
 plt.hist(Sigma_ml,density=True,color = 'lightgrey',label =r'$\hat{\sigma}_n$')
 plt.hist(Sigma_ml/sigma,density=True,color = 'grey',label =r'$\hat{\sigma}^{\sim}_n$')
 plt.axvline(x= sigma0,color = 'black', linestyle = '-.')
-plt.legend()
+plt.xlabel(r'$\sigma$')
 plt.savefig('sigma.zeta'+'{:.2f}'.format(p/n)+'.png')
 
 plt.show()
