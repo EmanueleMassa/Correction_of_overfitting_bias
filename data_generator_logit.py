@@ -86,40 +86,45 @@ def normal(x,mu,sigma):
 
 #beta1
 plt.figure()
-plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
-x = np.linspace(min(Beta_ml[:,0]),max(Beta_ml[:,0]),10000)
-plt.hist(Beta_ml[:,0]/kappa_rs,density=True,color='grey',label = r"$\mathbf{e}_1'\hat{\mathbf{\beta}}^{\sim}_n$")
+plt.title(r'$n=$'+str(n)+r" $\zeta=$"+'{:.2f}'.format(p/n)+r',  $\theta_0 =$'+str(theta0) + r", $\phi_0=$"+str(phi0))
+beta = Beta_ml[:,0]/kappa_rs
 plt.hist(Beta_ml[:,0],density=True,color='lightgrey',label = r"$\mathbf{e}_1'\hat{\mathbf{\beta}}_n$")
-plt.plot(x,normal(x,beta0[0],v*theta0/(w*np.sqrt(p))))
-plt.legend()
+x = np.linspace(min(beta),max(beta),10000)
+plt.hist(beta,density=True,color='grey',label = r"$\mathbf{e}_1'\hat{\mathbf{\beta}}^{\sim}_n$")
+plt.plot(x,normal(x,beta0[0],v*theta0/(w*np.sqrt(p))),'k-',label = r"$\mathcal{N}(\mathbf{e}_1'\mathbf{\beta}_0,v_{\star}^2/pk_{\star}^2)$'")
+plt.axvline(x= beta0[0],color = 'black', linestyle = '-.',label = r"$\mathbf{e}_1'\mathbf{\beta}_0$")
+plt.xlabel(r"$\beta_1$")
 plt.savefig('beta1_sim.zeta'+'{:.2f}'.format(p/n)+'.png')
 
-#beta3
+#beta2
 plt.figure()
-plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
-x = np.linspace(min(Beta_ml[:,2]),max(Beta_ml[:,2]),10000)
-plt.hist(Beta_ml[:,2]/kappa_rs,density=True,color='grey',label = r"$\mathbf{e}_3'\hat{\mathbf{\beta}}^{\sim}_n$")
-plt.hist(Beta_ml[:,2],density=True,color='lightgrey',label = r"$\mathbf{e}_3'\hat{\mathbf{\beta}}_n$")
-plt.plot(x,normal(x,beta0[2],v*theta0/(w*np.sqrt(p))))
-plt.legend()
-plt.savefig('beta3_sim.zeta'+'{:.2f}'.format(p/n)+'.png')
+plt.title(r'$n=$'+str(n)+r" $\zeta=$"+'{:.2f}'.format(p/n)+r',  $\theta_0 =$'+str(theta0) + r", $\phi_0=$"+str(phi0))
+beta = Beta_ml[:,1]/kappa_rs
+x = np.linspace(min(beta),max(beta),10000)
+plt.hist(Beta_ml[:,1],density=True,color='lightgrey',label = r"$\mathbf{e}_3'\hat{\mathbf{\beta}}_n$")
+plt.hist(beta,density=True,color='grey',label = r"$\mathbf{e}_3'\hat{\mathbf{\beta}}^{\sim}_n$")
+plt.plot(x,normal(x,beta0[1],v*theta0/(w*np.sqrt(p))),'k-',label = r"$\mathcal{N}(\mathbf{e}_3'\mathbf{\beta}_0,v_{\star}^2/pk_{\star}^2)$'")
+plt.axvline(x= beta0[2],color = 'black', linestyle = '-.',label = r"$\mathbf{e}_3'\mathbf{\beta}_0$")
+#plt.legend()
+plt.xlabel(r"$\beta_2$")
+plt.savefig('beta2_sim.zeta'+'{:.2f}'.format(p/n)+'.png')
 
 #phi
 plt.figure()
-plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
-plt.hist(Phi_rs,density=True,color = 'grey',label = r"$\hat{\phi}^{\sim}_n$")
+plt.title(r'$n=$'+str(n)+r" $\zeta=$"+'{:.2f}'.format(p/n)+r',  $\theta_0 =$'+str(theta0) + r", $\phi_0=$"+str(phi0))
 plt.hist(Phi_ml,density=True,color = 'lightgrey', label = r"$\hat{\phi}_n$")
+plt.hist(Phi_rs,density=True,color = 'grey',label = r"$\hat{\phi}^{\sim}_n$")
 plt.axvline(x= phi0,color = 'black', linestyle = '-.')
-plt.legend()
+plt.xlabel(r"$\phi$")
 plt.savefig('phi.zeta'+'{:.2f}'.format(p/n)+'.png')
 
 #theta
 plt.figure()
-plt.title(r'$n=$'+str(n)+r'$p=$'+str(p)+r',  $\theta_0 =$'+str(theta0) + r"$\phi_0=$"+str(phi0))
+plt.title(r'$n=$'+str(n)+r" $\zeta=$"+'{:.2f}'.format(p/n)+r',  $\theta_0 =$'+str(theta0) + r", $\phi_0=$"+str(phi0))
 plt.hist(Theta,density=True,color = 'lightgrey',label = r"$\hat{\theta}_n$")
 plt.hist(Theta_rs,density=True,color = 'grey',label = r"$\hat{\theta}^{\sim}_n$")
 plt.axvline(x= theta0,color = 'black', linestyle = '-.')
-plt.legend()
+plt.xlabel(r"$\theta$")
 plt.savefig('theta.zeta'+'{:.2f}'.format(p/n)+'.png')
 
 plt.show()
